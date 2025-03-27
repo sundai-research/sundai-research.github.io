@@ -145,7 +145,7 @@
 \[X = \left[\begin{array}{c|c|c|c}1_ne_1^\top &amp; X_{1,1} &amp; \dots &amp; X_{K,1} \\
 \vdots &amp; \vdots &amp; \dots &amp; \vdots \\ 1_ne_B^\top &amp; X_{1,B} &amp; \dots &amp; X_{K,B}\end{array}\right]\quad y = \begin{bmatrix}y_1 \\ \vdots \\ y_B\end{bmatrix},\]
 
-<p>where \(e_b\) is the \(b\)-th column of \(I_B\), \(X_{b,k}\) is the 0/1 matrix associated with the \(k\)-th prompt perturbation in the \(b\)-th experiment, and \(y_b\) is the outcome vector from the \(b\)-th experiment. We leave as an exercise to the reader to check that</p>
+<p>where \(e_b\) is the \(b\)-th column of \(I_B\), \(X_{b,k}\) is the dummy variable matrix associated with the \(k\)-th prompt perturbation in the \(b\)-th experiment, and \(y_b\) is the outcome vector from the \(b\)-th experiment. We leave as an exercise to the reader to check that</p>
 
 \[\textstyle
 \|y - X_0X_0^\top y\|_2^2 = \sum_{k=1}^K\|X_kX_k^\top y\|_2^2 + \|(I_n - XX^\top)y\|_2^2,
@@ -218,7 +218,7 @@
   <li>there is a significant fraction of residual variance that cannot be attributed to the main effects; we must consider interactions among prompt perturbations to explain this residual variance.</li>
 </ol>
 
-<p>Finally, here is our reliability leaderboard. There are only 5 only models on the leaderboard because there are only 5 models in DOVE Lite. The main bottleneck in the way of including more models on the leaderboard is performing more experiments to measure the accuracies of more LLMs under (more) prompt perturbations; the computational cost of evaluating (DoV) and (DoV2) is negligible on modern hardware.</p>
+<p>Finally, here is our reliability leaderboard that ranks LLMs by the (total) variance in their accuracies. Keep in mind that we are ranking models by their reliability, so if a model is reliably bad, then it’ll rank highly on the leaderboard. There are only 5 models on the leaderboard because there are only 5 models in DOVE Lite. The main bottleneck in the way of including more models on the leaderboard is performing more experiments to measure the accuracies of more LLMs under (more) prompt perturbations; the computational cost of evaluating (DoV) and (DoV2) is negligible on modern hardware.</p>
 
 <!-- | | benchmark | enumerator | separator | choices order | phrasing | residual | total |
 |:--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -237,7 +237,6 @@
   <thead>
     <tr>
       <th style="text-align: left;"></th>
-      <th style="text-align: right;">benchmark</th>
       <th style="text-align: right;">enumerator</th>
       <th style="text-align: right;">separator</th>
       <th style="text-align: right;">choices order</th>
@@ -248,38 +247,16 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left;"><code>Meta-Llama-3-8B-Instruct</code></td>
-      <td style="text-align: right;">5096.380943</td>
-      <td style="text-align: right;">279.759745</td>
-      <td style="text-align: right;">3.722368</td>
-      <td style="text-align: right;">190.237480</td>
-      <td style="text-align: right;">566.256863</td>
-      <td style="text-align: right;">1328.499393</td>
-      <td style="text-align: right;">7464.856792</td>
-    </tr>
-    <tr>
-      <td style="text-align: left;"><code>Llama-3.2-3B-Instruct</code></td>
-      <td style="text-align: right;">2853.161385</td>
-      <td style="text-align: right;">470.136490</td>
-      <td style="text-align: right;">18.672984</td>
-      <td style="text-align: right;">205.075207</td>
-      <td style="text-align: right;">208.307431</td>
-      <td style="text-align: right;">1403.789206</td>
-      <td style="text-align: right;">5159.142703</td>
-    </tr>
-    <tr>
-      <td style="text-align: left;"><code>Mistral-7B-Instruct-v0.3</code></td>
-      <td style="text-align: right;">3157.264186</td>
-      <td style="text-align: right;">121.579405</td>
-      <td style="text-align: right;">25.363689</td>
-      <td style="text-align: right;">85.748062</td>
-      <td style="text-align: right;">319.026200</td>
-      <td style="text-align: right;">825.532825</td>
-      <td style="text-align: right;">4534.514367</td>
+      <td style="text-align: left;"><code>Llama-3.2-1B-Instruct</code></td>
+      <td style="text-align: right;">167.214951</td>
+      <td style="text-align: right;">27.546341</td>
+      <td style="text-align: right;">281.520735</td>
+      <td style="text-align: right;">6.358699</td>
+      <td style="text-align: right;">1231.222435</td>
+      <td style="text-align: right;">1868.588306</td>
     </tr>
     <tr>
       <td style="text-align: left;"><code>OLMoE-1B-7B-0924-Instruct</code></td>
-      <td style="text-align: right;">2022.705493</td>
       <td style="text-align: right;">130.161762</td>
       <td style="text-align: right;">20.784928</td>
       <td style="text-align: right;">12.895170</td>
@@ -288,14 +265,31 @@
       <td style="text-align: right;">4105.514149</td>
     </tr>
     <tr>
-      <td style="text-align: left;"><code>Llama-3.2-1B-Instruct</code></td>
-      <td style="text-align: right;">154.725145</td>
-      <td style="text-align: right;">167.214951</td>
-      <td style="text-align: right;">27.546341</td>
-      <td style="text-align: right;">281.520735</td>
-      <td style="text-align: right;">6.358699</td>
-      <td style="text-align: right;">1231.222435</td>
-      <td style="text-align: right;">1868.588306</td>
+      <td style="text-align: left;"><code>Mistral-7B-Instruct-v0.3</code></td>
+      <td style="text-align: right;">121.579405</td>
+      <td style="text-align: right;">25.363689</td>
+      <td style="text-align: right;">85.748062</td>
+      <td style="text-align: right;">319.026200</td>
+      <td style="text-align: right;">825.532825</td>
+      <td style="text-align: right;">4534.514367</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><code>Llama-3.2-3B-Instruct</code></td>
+      <td style="text-align: right;">470.136490</td>
+      <td style="text-align: right;">18.672984</td>
+      <td style="text-align: right;">205.075207</td>
+      <td style="text-align: right;">208.307431</td>
+      <td style="text-align: right;">1403.789206</td>
+      <td style="text-align: right;">5159.142703</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><code>Meta-Llama-3-8B-Instruct</code></td>
+      <td style="text-align: right;">279.759745</td>
+      <td style="text-align: right;">3.722368</td>
+      <td style="text-align: right;">190.237480</td>
+      <td style="text-align: right;">566.256863</td>
+      <td style="text-align: right;">1328.499393</td>
+      <td style="text-align: right;">7464.856792</td>
     </tr>
   </tbody>
 </table>
