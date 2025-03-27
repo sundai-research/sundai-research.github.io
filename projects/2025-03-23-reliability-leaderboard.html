@@ -15,11 +15,11 @@
 <meta property="og:url" content="/projects/2025-03-23-reliability-leaderboard" />
 <meta property="og:site_name" content="Sundai Research" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2025-03-23T00:00:00-04:00" />
+<meta property="article:published_time" content="2025-03-23T00:00:00-07:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Reliability leaderboard" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-03-23T00:00:00-04:00","datePublished":"2025-03-23T00:00:00-04:00","description":"We built a reliability leaderboard to shed light on the reliability of LLMs. By reliability, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a reliable LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:","headline":"Reliability leaderboard","mainEntityOfPage":{"@type":"WebPage","@id":"/projects/2025-03-23-reliability-leaderboard"},"url":"/projects/2025-03-23-reliability-leaderboard"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-03-23T00:00:00-07:00","datePublished":"2025-03-23T00:00:00-07:00","description":"We built a reliability leaderboard to shed light on the reliability of LLMs. By reliability, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a reliable LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:","headline":"Reliability leaderboard","mainEntityOfPage":{"@type":"WebPage","@id":"/projects/2025-03-23-reliability-leaderboard"},"url":"/projects/2025-03-23-reliability-leaderboard"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -67,7 +67,7 @@
 
 <!-- __Notation/terminology:__ A prompt variation is a (distinct) combination of prompt perturbations, and we encode prompt variations with vectors of categorical variables $$x\in\reals^d$$, where $$d$$ is the total number of prompt perturbations. For example, if there are 2 prompt perturbations (eg the first 2 listed above) and 3, 2 possible values for the 2 prompt perturbations respectively, then there are $$x\in\reals^2$$ has $$3\times 2 = 6$$ combinations of the prompt perturbations. Let $$y\in\reals$$ be a measure (eg accuracy) of an LLM performance on a benchmark.  -->
 
-<p>We use the <a href="https://slab-nlp.github.io/DOVE/">Dataset Of Variation Evaluation (DOVE)</a> to assess the reliability of LLMs. This dataset records the results from (mixed-level) <em>full factorial</em> experiments, where the factors are the prompt perturbations, the levels are the possible values of the prompt perturbations, and outcome is an LLM’s (eg <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>’s) accuracy on a benchmark (eg HellaSwag). The dataset includes the results of \(392\times 5 = 1960\) experiments, where each experiment corresponds to a distinct benchmark-LLM pair.</p>
+<p>We use the lite version of <a href="https://slab-nlp.github.io/DOVE/">Dataset Of Variation Evaluation (DOVE)</a> to assess the reliability of LLMs. This dataset records the results from (mixed-level) <em>full factorial</em> experiments, where the factors are the prompt perturbations, the levels are the possible values of the prompt perturbations, and outcome is an LLM’s (eg <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>’s) accuracy on a benchmark (eg HellaSwag). The dataset includes the results of \(392\times 5 = 1960\) experiments, where each experiment corresponds to a distinct benchmark-LLM pair.</p>
 
 <p>For now, we focus on a single experiment in the DOVE dataset. Let \(X\in\{0,1\}^{n\times d}\) be the design matrix and \(y\in\reals^n\) be the outcome vector (so the rows of \(X\) encodes a combination of prompt perturbations and the corresponding entries in \(y\) are the LLM’s accuracy on the benchmark). The design matrix has the form</p>
 
@@ -87,14 +87,51 @@
   <li>\(\|(I_n - XX^\top)y\|_2^2\) is the residual variance that cannot be attributed to any prompt perturbation.</li>
 </ul>
 
-<p>For example, the total variance of <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>’s accuracy on <code class="language-plaintext highlighter-rouge">mmlu.high_school_macroeconomics</code> is 43.30, and it can be attributed to the prompt perturbations as follows:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                     sum_sq      df
-C(enumerator)      4.025135     5.0
-C(separator)       0.912668     6.0
-C(choices_order)   7.524167     6.0
-C(phrasing)       16.990095    12.0
-Residual          12.846194  3792.0
-</code></pre></div></div>
+<p>For example, we decompose the variance of <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>’s accuracy on 3 subsets of MMLU with (DoV) to obtain the following variance decomposition:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">hs_macroeconomics</code></th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">misc</code></th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">public_relations</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">enumerator</td>
+      <td style="text-align: right">4.025135</td>
+      <td style="text-align: right">5.637558</td>
+      <td style="text-align: right">4.119202</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">separator</td>
+      <td style="text-align: right">0.912668</td>
+      <td style="text-align: right">0.539501</td>
+      <td style="text-align: right">0.469672</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">choices order</td>
+      <td style="text-align: right">7.524167</td>
+      <td style="text-align: right">3.479708</td>
+      <td style="text-align: right">8.747673</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">phrasing</td>
+      <td style="text-align: right">16.990095</td>
+      <td style="text-align: right">14.544431</td>
+      <td style="text-align: right">2.711865</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">residual</td>
+      <td style="text-align: right">12.846194</td>
+      <td style="text-align: right">13.013123</td>
+      <td style="text-align: right">12.101369</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>We see that</p>
 
 <ol>
@@ -111,34 +148,157 @@ Residual          12.846194  3792.0
 <p>where \(e_b\) is the \(b\)-th column of \(I_B\), \(X_{b,k}\) is the 0/1 matrix associated with the \(k\)-th prompt perturbation in the \(b\)-th experiment, and \(y_b\) is the outcome vector from the \(b\)-th experiment. We leave as an exercise to the reader to check that</p>
 
 \[\textstyle
-\|y - EE^\top y\|_2^2 = \sum_{k=1}^K\|X_kX_k^\top y\|_2^2 + \|(I_n - XX^\top)y\|_2^2,
+\|y - X_0X_0^\top y\|_2^2 = \sum_{k=1}^K\|X_kX_k^\top y\|_2^2 + \|(I_n - XX^\top)y\|_2^2,
 \tag{DoV2}\]
 
-<p>where \(E\) is the left-most block of \(X\). We emphasize that the matrices \(X_k\) and \(X\) and vector \(y\) in (DoV2) are the stacked versions of the eponymous matrices and vector in (DoV). The terms in (DoV2) have similar interpretations as their counterparts in (DoV):</p>
+<p>where \(X_0\) is the left-most block of \(X\). We emphasize that the matrices \(X_k\) and \(X\) and vector \(y\) in (DoV2) are the stacked versions of the eponymous matrices and vector in (DoV). The terms in (DoV2) have similar interpretations as their counterparts in (DoV):</p>
 
 <ul>
-  <li>\(\|y - EE^\top y\|_2^2\) is the sum of variances in the LLM’s accuracy due to (all) prompt perturbations <em>across all benchmarks</em>;</li>
-  <li>\(\|X_kX_k^\top y\|_2^2\) is the variance (in the LLM’s accuracy) due to the \(k\)-th prompt perturbation <em>across all benchmarks</em>;</li>
+  <li>\(\|y - X_0X_0^\top y\|_2^2\) is the sum of variances across all benchmarks in the LLM’s accuracy due to (all) prompt perturbations;</li>
+  <li>\(\|X_kX_k^\top y\|_2^2\) is the variance (in the LLM’s accuracy) due to the \(k\)-th prompt perturbation (across all benchmarks);</li>
   <li>\(\|(I_n - XX^\top)y\|_2^2\) is the residual variance that cannot be attributed to any prompt perturbation.</li>
 </ul>
 
-<p>We evaluate (DoV2) for <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>, <code class="language-plaintext highlighter-rouge">Mistral-7B-Instruct-v0.3</code>,and <code class="language-plaintext highlighter-rouge">OLMoE-1B-7B-0924-Instruct</code> to obtain the following overall variance decompositions:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                  Meta-Llama-3-8B-Instruct  Mistral-7B-Instruct-v0.3  OLMoE-1B-7B-0924-Instruct
-                          sum_sq        df          sum_sq        df           sum_sq        df
-C(benchmark)         5096.380943      57.0     3157.264186      57.0      2022.705493      50.0
-C(enumerator)         279.759745       5.0      121.579405       5.0       130.161762       5.0
-C(separator)            3.722368       6.0       25.363689       6.0        20.784928       6.0
-C(choices_order)      190.237480       6.0       85.748062       6.0        12.895170       6.0
-C(phrasing)           566.256863      18.0      319.026200      18.0       231.941715      18.0
-Residual             1328.499393  221583.0      825.532825  221583.0      1687.025081  194836.0
-</code></pre></div></div>
+<p>For example, we decompose the total variance of <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>, <code class="language-plaintext highlighter-rouge">Mistral-7B-Instruct-v0.3</code>,and <code class="language-plaintext highlighter-rouge">OLMoE-1B-7B-0924-Instruct</code> (on all benchmarks) to obtain the following overall variance decompositions:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code></th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">Mistral-7B-Instruct-v0.3</code></th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">OLMoE-1B-7B-0924-Instruct</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">benchmark</td>
+      <td style="text-align: right">5096.380943</td>
+      <td style="text-align: right">3157.264186</td>
+      <td style="text-align: right">2022.705493</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">enumerator</td>
+      <td style="text-align: right">279.759745</td>
+      <td style="text-align: right">121.579405</td>
+      <td style="text-align: right">130.161762</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">separator</td>
+      <td style="text-align: right">3.722368</td>
+      <td style="text-align: right">25.363689</td>
+      <td style="text-align: right">20.784928</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">choices order</td>
+      <td style="text-align: right">190.237480</td>
+      <td style="text-align: right">85.748062</td>
+      <td style="text-align: right">12.895170</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">phrasing</td>
+      <td style="text-align: right">566.256863</td>
+      <td style="text-align: right">319.026200</td>
+      <td style="text-align: right">231.941715</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">residual</td>
+      <td style="text-align: right">1328.499393</td>
+      <td style="text-align: right">825.532825</td>
+      <td style="text-align: right">1687.025081</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>We see that</p>
 
 <ol>
   <li>the largest fraction of the variance in the LLMs’ accuracies is due to rephrasing the prompt, but changing the enumerator and answer choices order also account for significant fractions of the variance</li>
-  <li>changing the separator seems to have almost no effect on the LLMs’ accuracies;</li>
+  <li>changing the separator seems to have almost no effect on the LLMs’ accuracies (even in aggregate);</li>
   <li>there is a significant fraction of residual variance that cannot be attributed to the main effects; we must consider interactions among prompt perturbations to explain this residual variance.</li>
 </ol>
+
+<p>Finally, here is our reliability leaderboard. There are only 5 only models on the leaderboard because there are only 5 models in DOVE Lite. The main bottleneck in the way of including more models on the leaderboard is performing more experiments to measure the accuracies of more LLMs under (more) prompt perturbations; the computational cost of evaluating (DoV) and (DoV2) is negligible on modern hardware.</p>
+
+<!-- | | benchmark | enumerator | separator | choices order | phrasing | residual | total |
+|:--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `Meta-Llama-3-8B-Instruct` | 5096.380943 | 279.759745 | 3.722368 | 190.237480 | 566.256863 | 1328.499393 | 7464.856792 |
+| `Llama-3.2-3B-Instruct` | 2853.161385 | 470.136490 | 18.672984 | 205.075207 | 208.307431 | 1403.789206 | 5159.142703 |
+| `Mistral-7B-Instruct-v0.3` | 3157.264186 | 121.579405 | 25.363689 | 85.748062 | 319.026200 | 825.532825 | 4534.514367 |
+| `OLMoE-1B-7B-0924-Instruct` | 2022.705493 | 130.161762 | 20.784928 | 12.895170 | 231.941715 | 1687.025081 | 4105.514149 |
+| `Llama-3.2-1B-Instruct` | 154.725145 | 167.214951 | 27.546341 | 281.520735 | 6.358699 | 1231.222435 | 1868.588306 | -->
+
+<script src="/assets/js/sorttable.js"></script>
+
+<table class="sortable">
+  <caption>
+    <p><strong>LLM reliability leaderboard:</strong> click on the column headers to sort the rows by the entries in the respective columns</p>
+  </caption>
+  <thead>
+    <tr>
+      <th style="text-align: left;"></th>
+      <th style="text-align: right;">benchmark</th>
+      <th style="text-align: right;">enumerator</th>
+      <th style="text-align: right;">separator</th>
+      <th style="text-align: right;">choices order</th>
+      <th style="text-align: right;">phrasing</th>
+      <th style="text-align: right;">residual</th>
+      <th style="text-align: right;">total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left;"><code>Meta-Llama-3-8B-Instruct</code></td>
+      <td style="text-align: right;">5096.380943</td>
+      <td style="text-align: right;">279.759745</td>
+      <td style="text-align: right;">3.722368</td>
+      <td style="text-align: right;">190.237480</td>
+      <td style="text-align: right;">566.256863</td>
+      <td style="text-align: right;">1328.499393</td>
+      <td style="text-align: right;">7464.856792</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><code>Llama-3.2-3B-Instruct</code></td>
+      <td style="text-align: right;">2853.161385</td>
+      <td style="text-align: right;">470.136490</td>
+      <td style="text-align: right;">18.672984</td>
+      <td style="text-align: right;">205.075207</td>
+      <td style="text-align: right;">208.307431</td>
+      <td style="text-align: right;">1403.789206</td>
+      <td style="text-align: right;">5159.142703</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><code>Mistral-7B-Instruct-v0.3</code></td>
+      <td style="text-align: right;">3157.264186</td>
+      <td style="text-align: right;">121.579405</td>
+      <td style="text-align: right;">25.363689</td>
+      <td style="text-align: right;">85.748062</td>
+      <td style="text-align: right;">319.026200</td>
+      <td style="text-align: right;">825.532825</td>
+      <td style="text-align: right;">4534.514367</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><code>OLMoE-1B-7B-0924-Instruct</code></td>
+      <td style="text-align: right;">2022.705493</td>
+      <td style="text-align: right;">130.161762</td>
+      <td style="text-align: right;">20.784928</td>
+      <td style="text-align: right;">12.895170</td>
+      <td style="text-align: right;">231.941715</td>
+      <td style="text-align: right;">1687.025081</td>
+      <td style="text-align: right;">4105.514149</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;"><code>Llama-3.2-1B-Instruct</code></td>
+      <td style="text-align: right;">154.725145</td>
+      <td style="text-align: right;">167.214951</td>
+      <td style="text-align: right;">27.546341</td>
+      <td style="text-align: right;">281.520735</td>
+      <td style="text-align: right;">6.358699</td>
+      <td style="text-align: right;">1231.222435</td>
+      <td style="text-align: right;">1868.588306</td>
+    </tr>
+  </tbody>
+</table>
 
 
 <p><small>Hacked together by Seamus Somerstep and Yuekai Sun on March 23, 2025

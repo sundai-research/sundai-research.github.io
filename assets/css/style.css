@@ -677,11 +677,9 @@ figure {
   max-width: 100%;
 }
 
-figurecaption p {
-  font-size: 12px;
-  line-height: 1.5;
-  margin: 0.25_1 8px 0 0;
-  max-width: 100%;
+figure caption p {
+  margin: 0 auto 24px;
+  text-align: center;
 }
 
 hr {
@@ -808,6 +806,10 @@ td {
   text-align: left;
 }
 
+table caption p {
+  text-align: center;
+}
+
 header {
   float: left;
   position: fixed;
@@ -841,7 +843,7 @@ header a:hover, header a:focus {
   /* You may need to adjust the scale factor based on your chosen font */
   font-size: 23.5px; /* The scaling factor (0.75) may need adjustment */
   display: block;
-  margin: -28px 0 24px;
+  margin: -27px 0 24px;
   /* Scale to match width - may need fine-tuning */
 }
 
