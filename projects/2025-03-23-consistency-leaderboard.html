@@ -5,21 +5,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Reliability leaderboard | Sundai Research</title>
+<title>LLM consistency leaderboard | Sundai Research</title>
 <meta name="generator" content="Jekyll v4.4.1" />
-<meta property="og:title" content="Reliability leaderboard" />
+<meta property="og:title" content="LLM consistency leaderboard" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="We built a reliability leaderboard to shed light on the reliability of LLMs. By reliability, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a reliable LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:" />
-<meta property="og:description" content="We built a reliability leaderboard to shed light on the reliability of LLMs. By reliability, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a reliable LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:" />
-<link rel="canonical" href="/projects/2025-03-23-reliability-leaderboard" />
-<meta property="og:url" content="/projects/2025-03-23-reliability-leaderboard" />
+<meta name="description" content="We built an LLM consistency leaderboard to shed light on the consistency of LLMs. By consistency, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a consistent LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:" />
+<meta property="og:description" content="We built an LLM consistency leaderboard to shed light on the consistency of LLMs. By consistency, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a consistent LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:" />
+<link rel="canonical" href="/projects/2025-03-23-consistency-leaderboard" />
+<meta property="og:url" content="/projects/2025-03-23-consistency-leaderboard" />
 <meta property="og:site_name" content="Sundai Research" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2025-03-23T00:00:00-07:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Reliability leaderboard" />
+<meta property="twitter:title" content="LLM consistency leaderboard" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-03-23T00:00:00-07:00","datePublished":"2025-03-23T00:00:00-07:00","description":"We built a reliability leaderboard to shed light on the reliability of LLMs. By reliability, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a reliable LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:","headline":"Reliability leaderboard","mainEntityOfPage":{"@type":"WebPage","@id":"/projects/2025-03-23-reliability-leaderboard"},"url":"/projects/2025-03-23-reliability-leaderboard"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-03-23T00:00:00-07:00","datePublished":"2025-03-23T00:00:00-07:00","description":"We built an LLM consistency leaderboard to shed light on the consistency of LLMs. By consistency, we mean the model’s performance should be insensitive to prompt perturbations that are semantically equivalent to the original prompt. In other words, a consistent LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of prompt perturbations that should not affect the model’s performance include:","headline":"LLM consistency leaderboard","mainEntityOfPage":{"@type":"WebPage","@id":"/projects/2025-03-23-consistency-leaderboard"},"url":"/projects/2025-03-23-consistency-leaderboard"}</script>
 <!-- End Jekyll SEO tag -->
 
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -27,7 +27,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
   <![endif]-->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/ef661a1083.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/2547d58cc9.js" crossorigin="anonymous"></script>
   
   <script src="/assets/js/mathjax-config.js" type="text/javascript"></script>
   
@@ -53,9 +53,9 @@
 
       <section>
 
-      <h1>Reliability leaderboard</h1>
+      <h1>LLM consistency leaderboard</h1>
 
-<p>We built a reliability leaderboard to shed light on the <em>reliability</em> of LLMs. By reliability, we mean the model’s performance should be insensitive to  prompt perturbations that are <em>semantically equivalent</em> to the original prompt. In other words, a reliable LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of <em>prompt perturbations</em> that should not affect the model’s performance include:</p>
+<p>We built an LLM consistency leaderboard to shed light on the <em>consistency</em> of LLMs. By consistency, we mean the model’s performance should be insensitive to  prompt perturbations that are <em>semantically equivalent</em> to the original prompt. In other words, a consistent LLM should perform the same regardless of how exactly it is prompted (as long as the crux of the prompt remains the same). For multiple choice question-answering (QA) tasks, some examples of <em>prompt perturbations</em> that should not affect the model’s performance include:</p>
 
 <ol>
   <li>changing the way the list of answer choices is numbered (eg from arabic to roman numerals),</li>
@@ -63,17 +63,15 @@
   <li>changing the order of the answer choices.</li>
 </ol>
 
-<p>The main statistical concept that we rely on to assess LLM reliability is the <em>decomposition of variance</em>, which allows us to attribute the variance in the LLMs performance to the prompt perturbations.</p>
+<p>The main statistical concept that we rely on to assess LLM consistency is the <em>decomposition of variance</em>, which allows us to attribute the variance in the LLMs performance to the prompt perturbations.</p>
 
-<!-- __Notation/terminology:__ A prompt variation is a (distinct) combination of prompt perturbations, and we encode prompt variations with vectors of categorical variables $$x\in\reals^d$$, where $$d$$ is the total number of prompt perturbations. For example, if there are 2 prompt perturbations (eg the first 2 listed above) and 3, 2 possible values for the 2 prompt perturbations respectively, then there are $$x\in\reals^2$$ has $$3\times 2 = 6$$ combinations of the prompt perturbations. Let $$y\in\reals$$ be a measure (eg accuracy) of an LLM performance on a benchmark.  -->
-
-<p>We use the lite version of <a href="https://slab-nlp.github.io/DOVE/">Dataset Of Variation Evaluation (DOVE)</a> to assess the reliability of LLMs. This dataset records the results from (mixed-level) <em>full factorial</em> experiments, where the factors are the prompt perturbations, the levels are the possible values of the prompt perturbations, and outcome is an LLM’s (eg <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>’s) accuracy on a benchmark (eg HellaSwag). The dataset includes the results of \(392\times 5 = 1960\) experiments, where each experiment corresponds to a distinct benchmark-LLM pair.</p>
+<p>We use the lite version of <a href="https://slab-nlp.github.io/DOVE/">Dataset Of Variation Evaluation (DOVE)</a> to assess the consistency of LLMs. This dataset records the results from (mixed-level) <em>full factorial</em> experiments, where the factors are the prompt perturbations, the levels are the possible values of the prompt perturbations, and outcome is an LLM’s (eg <code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code>’s) accuracy on a benchmark (eg HellaSwag). The dataset includes the results of \(392\times 5 = 1960\) experiments, where each experiment corresponds to a distinct benchmark-LLM pair.</p>
 
 <p>For now, we focus on a single experiment in the DOVE dataset. Let \(X\in\{0,1\}^{n\times d}\) be the design matrix and \(y\in\reals^n\) be the outcome vector (so the rows of \(X\) encodes a combination of prompt perturbations and the corresponding entries in \(y\) are the LLM’s accuracy on the benchmark). The design matrix has the form</p>
 
 \[X = \left[\begin{array}{c|c|c|c}1_n &amp; X_1 &amp; \dots &amp; X_K\end{array}\right],\]
 
-<p>where \(1_n\) is a vector of ones (encoding the intercept term) and \(X_k\) is a 0/1 matrix encoding the \(L_k-1\) dummy variables indicating the levels of the \(k\)-th prompt perturbation. In a full-factorial experiment, the design matrix has orthogonal columns, so it is possible to decompose the variance of \(y\) as</p>
+<p>where \(1_n\) is a vector of ones (encoding the intercept term) and \(X_k\) is a 0/1 matrix encoding the \(L_k-1\) dummy variables indicating the levels of the \(k\)-th prompt perturbation. In a full-factorial experiment, the design matrix is orthogonal (ie it has orthogonal columns), so it is possible to decompose the variance of \(y\) as</p>
 
 \[\textstyle
 \|y - 1_n\bar{y}\|_2^2 = \sum_{k=1}^K\|X_kX_k^\top y\|_2^2 + \|(I_n - XX^\top)y\|_2^2,
@@ -92,7 +90,7 @@
 <table>
   <thead>
     <tr>
-      <th style="text-align: left"> </th>
+      <th style="text-align: left">prompt perturbation</th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">hs_macroeconomics</code></th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">misc</code></th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">public_relations</code></th>
@@ -140,7 +138,7 @@
   <li>there is a significant fraction of residual variance that cannot be attributed to the main effects; we must consider interactions among prompt perturbations to explain this residual variance.</li>
 </ol>
 
-<p>The preceding variance decomposition decomposes the variance in an LLM’s accuracy on a benchmark. To assess the overall reliability of an LLM, we wish to aggregate the variance decompositions across multiple benchmarks. The relies on a generalization of (DoV) to multiple experiment. We start by stacking the design matrices and outcome vectors from multiple experiments to form a single very tall design matrix and single very long outcome vector:</p>
+<p>The preceding variance decomposition decomposes the variance in an LLM’s accuracy on a benchmark. To assess the overall consistency of an LLM, we wish to aggregate the variance decompositions across multiple benchmarks. The relies on a generalization of (DoV) to multiple experiment. We start by stacking the design matrices and outcome vectors from multiple experiments to form a single very tall design matrix and single very long outcome vector:</p>
 
 \[X = \left[\begin{array}{c|c|c|c}1_ne_1^\top &amp; X_{1,1} &amp; \dots &amp; X_{K,1} \\
 \vdots &amp; \vdots &amp; \dots &amp; \vdots \\ 1_ne_B^\top &amp; X_{1,B} &amp; \dots &amp; X_{K,B}\end{array}\right]\quad y = \begin{bmatrix}y_1 \\ \vdots \\ y_B\end{bmatrix},\]
@@ -151,7 +149,7 @@
 \|y - X_0X_0^\top y\|_2^2 = \sum_{k=1}^K\|X_kX_k^\top y\|_2^2 + \|(I_n - XX^\top)y\|_2^2,
 \tag{DoV2}\]
 
-<p>where \(X_0\) is the left-most block of \(X\). We emphasize that the matrices \(X_k\) and \(X\) and vector \(y\) in (DoV2) are the stacked versions of the eponymous matrices and vector in (DoV). The terms in (DoV2) have similar interpretations as their counterparts in (DoV):</p>
+<p>where \(X_0\) is the leftmost block of \(X\) that indicates the experiment. We emphasize that the matrices \(X_k\) and \(X\) and vector \(y\) in (DoV2) are the stacked versions of the eponymous matrices and vector in (DoV). The terms in (DoV2) have similar interpretations as their counterparts in (DoV):</p>
 
 <ul>
   <li>\(\|y - X_0X_0^\top y\|_2^2\) is the sum of variances across all benchmarks in the LLM’s accuracy due to (all) prompt perturbations;</li>
@@ -164,7 +162,7 @@
 <table>
   <thead>
     <tr>
-      <th style="text-align: left"> </th>
+      <th style="text-align: left">prompt perturbation</th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">Meta-Llama-3-8B-Instruct</code></th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">Mistral-7B-Instruct-v0.3</code></th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">OLMoE-1B-7B-0924-Instruct</code></th>
@@ -218,7 +216,7 @@
   <li>there is a significant fraction of residual variance that cannot be attributed to the main effects; we must consider interactions among prompt perturbations to explain this residual variance.</li>
 </ol>
 
-<p>Finally, here is our reliability leaderboard that ranks LLMs by the (total) variance in their accuracies. Keep in mind that we are ranking models by their reliability, so if a model is reliably bad, then it’ll rank highly on the leaderboard. There are only 5 models on the leaderboard because there are only 5 models in DOVE Lite. The main bottleneck in the way of including more models on the leaderboard is performing more experiments to measure the accuracies of more LLMs under (more) prompt perturbations; the computational cost of evaluating (DoV) and (DoV2) is negligible on modern hardware.</p>
+<p>Finally, here is our consistency leaderboard that ranks LLMs by the (total) variance in their accuracies. Keep in mind that we are ranking models by their consistency: if a model is consistently bad (eg <code class="language-plaintext highlighter-rouge">Llama-3.2-1B-Instruct</code>), then it’ll rank highly on the consistency leaderboard. Right now, there are only 5 models on the leaderboard because there are only 5 models in DOVE Lite. The main bottleneck in the way of including more models on the leaderboard is performing more experiments to measure the accuracies of more LLMs under (more) prompt perturbations; the computational cost of evaluating (DoV) and (DoV2) is negligible on modern hardware.</p>
 
 <!-- | | benchmark | enumerator | separator | choices order | phrasing | residual | total |
 |:--- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -232,11 +230,11 @@
 
 <table class="sortable">
   <caption>
-    <p><strong>LLM reliability leaderboard:</strong> click on the column headers to sort the rows by the entries in the respective columns</p>
+    <p><strong>LLM consistency leaderboard:</strong> click on the column headers to sort the rows by the entries in the respective columns</p>
   </caption>
   <thead>
     <tr>
-      <th style="text-align: left;"></th>
+      <th style="text-align: left;">LLM</th>
       <th style="text-align: right;">enumerator</th>
       <th style="text-align: right;">separator</th>
       <th style="text-align: right;">choices order</th>
@@ -293,6 +291,10 @@
     </tr>
   </tbody>
 </table>
+
+<blockquote>
+  <p>A notebook to replicate (the numbers on) the leaderboard is available at <i class="fab fa-github fa-fw"></i> / <a href="https://github.com/sundai-research">sundai-research</a> / <a href="https://github.com/sundai-research/consistency-leaderboard">consistency-leaderboard</a>.</p>
+</blockquote>
 
 
 <p><small>Hacked together by Seamus Somerstep and Yuekai Sun on March 23, 2025
